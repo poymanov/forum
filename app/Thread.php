@@ -7,6 +7,8 @@ use App\Reply;
 
 class Thread extends Model
 {
+    protected $fillable = ['user_id', 'body', 'title'];
+
     public function replies()
     {
         return $this->hasMany(Reply::class);
