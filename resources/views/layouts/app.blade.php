@@ -28,7 +28,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li>
-                            <a href="{{ route('threads') }}">All threads</a>
+                            <a href="{{ route('threads.index') }}">All threads</a>
                         </li>
                     </ul>
 

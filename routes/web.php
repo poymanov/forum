@@ -15,10 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/threads', 'ThreadsController@index')->name('threads');
-Route::get('/threads/{thread}', 'ThreadsController@show')->name('threads.show');
-Route::post('/threads/{thread}/replies', 'RepliesController@store')->name('replies.add');
-Route::post('/threads', 'ThreadsController@store')->name('threads.add');
+Route::resource('threads', 'ThreadsController');
+Route::post('/threads/{thread}/replies', 'RepliesController@store')->name('replies.store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

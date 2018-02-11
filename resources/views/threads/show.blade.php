@@ -26,7 +26,7 @@
     @if(auth()->check())
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form method="POST" action="{{ route('replies.add', ['thread' => $thread->id]) }}">
+                <form method="POST" action="{{ route('replies.store', ['thread' => $thread->id]) }}">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <textarea name="body" class="form-control" rows="5" placeholder="Have something to say?"></textarea>

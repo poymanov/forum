@@ -10,11 +10,25 @@ class CreateThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
-        /** @test */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+    }
+
+    /** @test */
     public function an_unauthenticated_user_may_not_add_thread()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
         $this->post('/threads', []);
+    }
+
+    /** @test */
+    public function an_unauthenticated_may_not_see_create_form()
+    {
+        $this->withExceptionHandling()
+            ->get('threads/create')
+            ->assertRedirect('/login');
     }
 
     /** @test */

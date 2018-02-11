@@ -10,6 +10,12 @@ class ParticipateInForumTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+    }
+
     /** @test */
     public function an_unauthenticated_user_may_not_add_reply()
     {
