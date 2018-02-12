@@ -36,10 +36,10 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make('App\Thread');
+        $thread = create('App\Thread');
 
         $this->post('/threads', $thread->toArray());
-        $this->get('/threads/' . $thread->id)
+        $this->get("/threads/{$thread->channel->slug}/{$thread->id}")
             ->assertSee($thread->title)
             ->assertSee($thread->body);
     }

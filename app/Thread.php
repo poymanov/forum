@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Reply;
+use App\Channel;
 
 class Thread extends Model
 {
-    protected $fillable = ['user_id', 'body', 'title'];
+    protected $fillable = ['user_id', 'body', 'title', 'channel_id'];
 
     public function replies()
     {
@@ -17,6 +18,11 @@ class Thread extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
     }
 
     public function addReply($reply)

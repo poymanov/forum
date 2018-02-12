@@ -20,7 +20,7 @@ class ParticipateInForumTest extends TestCase
     public function an_unauthenticated_user_may_not_add_reply()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
-        $this->post('/threads/1/replies', []);
+        $this->post('/threads/test/1/replies', []);
     }
 
     /** @test */
@@ -31,9 +31,9 @@ class ParticipateInForumTest extends TestCase
         $thread = create('App\Thread');
 
         $reply = make('App\Reply');
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray());
 
-        $this->get('/threads/' . $thread->id)
+        $this->get("/threads/{$thread->channel->name}/$thread->id")
              ->assertSee($reply->body);
     }
 }
