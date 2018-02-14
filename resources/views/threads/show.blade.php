@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center mb-4">
+    <div class="row">
         <div class="col-md-8">
-            <div class="card card-default">
+            <div class="card card-default mb-4">
                 <div class="card-header">
                     <a href="#">{{ $thread->creator->name }}</a> created {{ $thread->title }}</div>
 
@@ -12,33 +12,39 @@
                     {{ $thread->body }}
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            @foreach($thread->replies as $reply)
-                @include('threads.reply')
-            @endforeach
-        </div>
-    </div>
+            <div class="replies">
+                @foreach($replies as $reply)
+                    @include('threads.reply')
+                @endforeach
 
-    @if(auth()->check())
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form method="POST" action="{{ route('replies.store', ['channel' => $thread->channel->name, 'thread' => $thread->id]) }}">
-                    {{ csrf_field() }}
-                    <div class="form-group">
-                        <textarea name="body" class="form-control" rows="5" placeholder="Have something to say?"></textarea>
-                    </div>
+                {{ $replies->links() }}
+            </div>
 
-                    <button type="submit" class="btn">Post</button>
-                </form>
+            <div class="create-reply">
+                @if(auth()->check())
+                    <form method="POST" action="{{ route('replies.store', ['channel' => $thread->channel->name, 'thread' => $thread->id]) }}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <textarea name="body" class="form-control" rows="5" placeholder="Have something to say?"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn">Post</button>
+                    </form>
+                @else
+                    <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate this discussion</p>
+                @endif
             </div>
         </div>
-    @else
-        <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate this discussion</p>
-    @endif
-
+        <div class="col-md-4">
+            <div class="card card-default mb-4">
+                <div class="card-body">
+                    A thread was published {{ $thread->created_at->diffForHumans() }} by
+                    <a href="#">{{ $thread->creator->name }}</a> and currently has {{ $thread->replies_count }}
+                    {{ str_plural('comment', $thread->replies_count) }}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
