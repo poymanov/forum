@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .thread-header {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -31,6 +38,7 @@
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Browse</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('threads.index') }}">All threads</a>
+                                <a class="dropdown-item" href="{{ route('threads.index') }}?popular=1">Popular Threads</a>
                                 @if(Auth::check())
                                     <a class="dropdown-item" href="{{ route('threads.index') }}?by={{ Auth::user()->name }}">My Threads</a>
                                 @endif

@@ -7,8 +7,12 @@ use App\Channel;
 
 $factory->define(Thread::class, function (Faker $faker) {
     return [
-        'user_id' => factory(User::class)->create()->id,
-        'channel_id' => factory(Channel::class)->create()->id,
+        'user_id' => function () {
+            return factory('App\User')->create()->id;
+        },
+        'channel_id' => function () {
+            return factory('App\Channel')->create()->id;
+        },
         'title' => $faker->sentence,
         'body' => $faker->paragraph
     ];

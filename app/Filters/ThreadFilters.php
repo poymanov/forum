@@ -11,7 +11,7 @@ class ThreadFilters extends Filters
      *
      * @var array
      */
-    protected $filters = ['by'];
+    protected $filters = ['by', 'popular'];
 
     /**
      * Filter the query by a given username.
@@ -23,5 +23,11 @@ class ThreadFilters extends Filters
         $user = User::where('name', $username)->firstOrFail();
 
         return $this->builder->where('user_id', $user->id);
+    }
+
+    protected function popular()
+    {
+        $this->builder->getQuery()->orders = [];
+        return $this->builder->orderByDesc('replies_count');
     }
 }
