@@ -36,7 +36,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Channels</a>
                             <div class="dropdown-menu">
-                                @foreach(\App\Channel::all() as $channel)
+                                @foreach($channels as $channel)
                                     <a class="dropdown-item" href="{{ route('threads.channel', $channel) }}">{{ $channel->name }}</a>
                                 @endforeach
                             </div>
