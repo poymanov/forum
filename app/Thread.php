@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Reply;
 use App\Channel;
+use App\Filters\ThreadFilters;
 
 class Thread extends Model
 {
@@ -28,5 +29,16 @@ class Thread extends Model
     public function addReply($reply)
     {
         $this->replies()->create($reply);
+    }
+
+    /**
+     * Apply all relevant thread filters.
+     * @param $query
+     * @param ThreadFilters $filters
+     * @return mixed
+     */
+    public function scopeFilter($query, ThreadFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }
