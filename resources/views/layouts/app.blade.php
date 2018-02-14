@@ -30,6 +30,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('threads.index') }}">All threads</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('threads.create') }}">Create thread</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Channels</a>
                             <div class="dropdown-menu">
