@@ -20,6 +20,7 @@ Route::get('/threads/{channel}/{thread}', 'ThreadsController@show')->name('threa
 Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
 Route::post('/threads', 'ThreadsController@store')->name('threads.store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->name('replies.store');
+Route::get('/threads/{channel}', 'ThreadsController@index')->name('threads.channel');
 
 Auth::routes();
 

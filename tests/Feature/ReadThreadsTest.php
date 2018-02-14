@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ThreadsTest extends TestCase
+class ReadThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -40,5 +40,22 @@ class ThreadsTest extends TestCase
 
         $this->get("/threads/{$this->thread->channel->name}/{$this->thread->id}")
              ->assertSee($reply->body);
+    }
+
+    /** @test */
+    public function a_user_can_view_threads_associated_with_channel()
+    {
+        $channel = create('App\Channel');
+
+        $threadSeeInChannel = create('App\Thread', [
+            'channel_id' => $channel->id
+        ]);
+
+        $threadNotSeeInChannel = create('App\Thread');
+
+        $this->get('/threads/' . $channel->slug)
+            ->assertSee($threadSeeInChannel->title)
+            ->assertDontSee($threadNotSeeInChannel->title);
+
     }
 }
