@@ -27,9 +27,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('threads.index') }}">All threads</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Browse</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('threads.index') }}">All threads</a>
+                                @if(Auth::check())
+                                    <a class="dropdown-item" href="{{ route('threads.index') }}?by={{ Auth::user()->name }}">My Threads</a>
+                                @endif
+                            </div>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('threads.create') }}">Create thread</a>
                         </li>
