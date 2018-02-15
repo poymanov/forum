@@ -5,8 +5,18 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card card-default mb-4">
-                <div class="card-header">
-                    <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> created {{ $thread->title }}
+                <div class="card-header show-thread-header">
+                    <div>
+                        <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> created {{ $thread->title }}
+                    </div>
+
+                    <div>
+                        <form method="post" action="{{ route('threads.delete', ['channel' => $thread->channel->name, 'thread' => $thread->id]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-link">Delete</button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="card-body">
