@@ -18,6 +18,11 @@
             display: flex;
             justify-content: space-between;
         }
+
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
