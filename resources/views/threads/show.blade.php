@@ -10,13 +10,15 @@
                         <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> created {{ $thread->title }}
                     </div>
 
-                    <div>
-                        <form method="post" action="{{ route('threads.delete', ['channel' => $thread->channel->name, 'thread' => $thread->id]) }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-link">Delete</button>
-                        </form>
-                    </div>
+                    @can('update', $thread)
+                        <div>
+                            <form method="post" action="{{ route('threads.delete', ['channel' => $thread->channel->name, 'thread' => $thread->id]) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        </div>
+                    @endcan
                 </div>
 
                 <div class="card-body">

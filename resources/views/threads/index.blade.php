@@ -8,7 +8,7 @@
                 <div class="card-header">Forum Threads</div>
 
                 <div class="card-body">
-                    @foreach($threads as $thread)
+                    @forelse($threads as $thread)
                         <article>
                             <div class="thread-header">
                                 <h4><a href="{{ route('threads.show', [$thread->channel->slug, $thread]) }}">{{ $thread->title }}</a></h4>
@@ -21,7 +21,9 @@
                             <div class="body">{{ $thread->body }}</div>
                         </article>
                         <hr>
-                    @endforeach
+                    @empty
+                        There is no threads yet...
+                    @endforelse
                 </div>
             </div>
         </div>
