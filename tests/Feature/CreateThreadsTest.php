@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Activity;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -95,7 +96,8 @@ class CreateThreadsTest extends TestCase
         $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->id);
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id])
-            ->assertDatabaseMissing('replies', ['id' => $reply->id]);
+            ->assertDatabaseMissing('replies', ['id' => $reply->id])
+            ->assertEquals(0, Activity::count());
     }
 
     protected function publishThread($overrides = [])
