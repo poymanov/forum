@@ -30,6 +30,8 @@ class ProfileTest extends TestCase
     {
         $user = create('App\User');
 
+        $this->signIn($user);
+
         $thread = create('App\Thread', [
             'user_id' => $user->id
         ]);
