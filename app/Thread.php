@@ -9,6 +9,8 @@ use App\Filters\ThreadFilters;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $fillable = ['user_id', 'body', 'title', 'channel_id'];
 
     protected $with = ['creator', 'channel'];
