@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Activity;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,5 +39,26 @@ class ActivityTest extends TestCase
          $reply = create('App\Reply');
 
          $this->assertEquals(2, Activity::count());
+    }
+
+    /** @test */
+    public function activity_can_return_feed_by_user()
+    {
+        $user = create('App\User');
+        $this->signIn($user);
+
+        create('App\Thread', ['user_id' => $user->id] ,2);
+
+        Activity::first()->update(['created_at' => Carbon::now()->subWeek()]);
+
+        $feed = Activity::feed($user);
+
+        $this->assertTrue(
+            $feed->keys()->contains(Carbon::now()->format('d-m-Y'))
+        );
+
+        $this->assertTrue(
+            $feed->keys()->contains(Carbon::now()->subWeek()->format('d-m-Y'))
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -11,14 +12,7 @@ class ProfileController extends Controller
     {
         return view('profile.show', [
             'profileUser' => $user,
-            'activities' => $this->getActivitiesFeed($user)
+            'activities' => Activity::feed($user)
         ]);
-    }
-
-    protected function getActivitiesFeed(User $user)
-    {
-        return $activities = $user->activities()->with('subject')->take(50)->latest()->get()->groupBy(function($activity) {
-            return $activity->created_at->format('d-m-Y');
-        });
     }
 }
