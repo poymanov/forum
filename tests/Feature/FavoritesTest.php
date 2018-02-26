@@ -10,6 +10,12 @@ class FavoritesTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+    }
+
     /** @test */
     public function a_guest_user_may_not_favorite_reply()
     {
@@ -28,6 +34,20 @@ class FavoritesTest extends TestCase
         $this->post('/replies/' . $reply->id . '/favorites');
 
         $this->assertCount(1, $reply->favorites);
+    }
+
+    /** @test */
+    public function a_user_can_unfavorite_reply()
+    {
+        $this->signIn();
+
+        $reply = create('App\Reply');
+
+        $reply->favorite();
+
+        $this->delete('/replies/' . $reply->id . '/favorites');
+
+        $this->assertCount(0, $reply->fresh()->favorites);
     }
 
     /** @test */
