@@ -29,12 +29,7 @@
         @can('update', $reply)
             <div class="card-footer d-flex">
                 <button class="btn btn-primary mr-2" @click="editing = true">Edit</button>
-
-                <form method="post" action="{{ route('replies.delete', $reply) }}">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-                    <button class="btn btn-danger">Delete</button>
-                </form>
+                <button class="btn btn-danger" @click="destroy">Delete</button>
             </div>
         @endcan
     </div>

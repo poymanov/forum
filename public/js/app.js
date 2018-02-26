@@ -47559,6 +47559,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editing = false;
 
             flash('Updated');
+        },
+        destroy: function destroy() {
+            axios.delete('/replies/' + this.attributes.id);
+
+            $(this.$el).fadeOut(300, function () {
+                flash('The reply has been delete');
+            });
         }
     }
 });
