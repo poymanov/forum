@@ -28,6 +28,10 @@
             display: flex;
             justify-content: space-between;
         }
+
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 <body>

@@ -1,30 +1,41 @@
-<div id="reply-{{ $reply->id }}" class="card card-default mb-4">
-    <div class="card-header">
+<reply :attributes="{{ $reply }}" inline-template v-cloak>
+    <div id="reply-{{ $reply->id }}" class="card card-default mb-4">
+        <div class="card-header">
 
-        <div class="reply-header">
-            <div><a href="{{ route('profile.show', $reply->owner) }}">{{ $reply->owner->name }}</a> said {{ $reply->created_at->diffForHumans() }}</div>
-            <div>
-                <form method="post" action="/replies/{{ $reply->id }}/favorites">
-                    {{ csrf_field() }}
-                    <button class="btn" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                        {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites_count) }}
-                    </button>
-                </form>
+            <div class="reply-header">
+                <div><a href="{{ route('profile.show', $reply->owner) }}">{{ $reply->owner->name }}</a> said {{ $reply->created_at->diffForHumans() }}</div>
+                <div>
+                    <form method="post" action="/replies/{{ $reply->id }}/favorites">
+                        {{ csrf_field() }}
+                        <button class="btn" {{ $reply->isFavorited() ? 'disabled' : '' }}>
+                            {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites_count) }}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="card-body">
-        {{ $reply->body }}
-    </div>
+        <div class="card-body" v-if="editing === true">
+            <p>
+                <textarea name="edit-reply" rows="5" class="form-control" v-model="body"></textarea>
+            </p>
 
-    @can('update', $reply)
-        <div class="card-footer">
-            <form method="post" action="{{ route('replies.delete', $reply) }}">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button class="btn btn-danger">Delete</button>
-            </form>
+            <button class="btn btn-primary" @click="update">Update</button>
+            <button class="btn btn-link" @click="editing = false">Cancel</button>
         </div>
-    @endcan
-</div>
+
+        <div class="card-body" v-else-if="editing === false" v-text="body"></div>
+
+        @can('update', $reply)
+            <div class="card-footer d-flex">
+                <button class="btn btn-primary mr-2" @click="editing = true">Edit</button>
+
+                <form method="post" action="{{ route('replies.delete', $reply) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        @endcan
+    </div>
+</reply>
