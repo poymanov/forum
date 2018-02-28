@@ -63797,7 +63797,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         broadcast: function broadcast() {
-            return this.$emit('changed', this.id);
+            return this.$emit('changed', this.page);
         },
         updateUrl: function updateUrl() {
             history.pushState(null, null, "?page=" + this.page);

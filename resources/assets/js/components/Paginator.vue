@@ -44,7 +44,7 @@
         },
         methods: {
             broadcast() {
-                return this.$emit('changed', this.id);
+                return this.$emit('changed', this.page);
             },
             updateUrl() {
                 history.pushState(null, null, "?page=" + this.page)
