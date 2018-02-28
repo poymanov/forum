@@ -34,8 +34,11 @@
                 <div class="col-md-4">
                     <div class="card card-default mb-4">
                         <div class="card-body">
-                            A thread was published {{ $thread->created_at->diffForHumans() }} by
-                            <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> and currently has <span v-text="repliesCount"></span>
+                            <p>
+                                A thread was published {{ $thread->created_at->diffForHumans() }} by
+                                <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> and currently has <span v-text="repliesCount"></span>
+                            </p>
+                            <subscription-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscription-button>
                         </div>
                     </div>
                 </div>
