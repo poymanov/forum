@@ -14,6 +14,7 @@ class ReadThreadsTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->withoutExceptionHandling();
 
         $this->thread = create('App\Thread');
     }
@@ -87,5 +88,16 @@ class ReadThreadsTest extends TestCase
         $response = $this->json('get', '/threads?popular=1')->json();
         
         $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+    }
+
+    /** @test */
+    public function it_can_request_replies_by_thread()
+    {
+        $thread = $this->thread;
+        create('App\Reply', ['thread_id' => $thread->id], 2);
+
+        $response = $this->json('get', "/threads/{$thread->channel->name}/{$thread->id}/replies")->json();
+
+        $this->assertCount(2, $response['data']);
     }
 }

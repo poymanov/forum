@@ -4,7 +4,7 @@
 
             <div class="reply-header">
                 <div>
-                    <a :href="'/profile/' + owner_name" v-text="">{{ owner_name }}</a> said {{ created_at }}
+                    <a :href="'/profile/' + owner_name" v-text="">{{ owner_name }}</a> said {{ ago }}
                 </div>
                 <div v-if="signedIn === true">
                     <favorite :reply="data"></favorite>
@@ -32,6 +32,7 @@
 
 <script>
     import Favorite from './Favorite.vue';
+    import moment from 'moment';
 
     export default {
         props: ['data'],
@@ -46,8 +47,8 @@
             owner_name() {
                 return this.data.owner.name;
             },
-            created_at() {
-                return this.data.created_at;
+            ago() {
+                return moment(this.data.created_at).fromNow();
             },
             signedIn() {
                 return window.App.signedIn;
