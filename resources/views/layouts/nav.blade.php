@@ -15,6 +15,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('threads.index') }}">All threads</a>
                         <a class="dropdown-item" href="{{ route('threads.index') }}?popular=1">Popular Threads</a>
+                        <a class="dropdown-item" href="{{ route('threads.index') }}?unanswered=1">Unanswered Threads</a>
                         @if(Auth::check())
                             <a class="dropdown-item" href="{{ route('threads.index') }}?by={{ Auth::user()->name }}">My Threads</a>
                         @endif

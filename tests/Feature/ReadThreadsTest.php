@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Thread;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -31,17 +32,6 @@ class ReadThreadsTest extends TestCase
     {
         $this->get("/threads/{$this->thread->channel->name}/{$this->thread->id}")
              ->assertSee($this->thread->title);
-    }
-
-    /** @test */
-    public function a_user_can_see_replies_associated_with_thread()
-    {
-        $reply = create('App\Reply', [
-            'thread_id' => $this->thread->id
-        ]);
-
-        $this->get("/threads/{$this->thread->channel->name}/{$this->thread->id}")
-             ->assertSee($reply->body);
     }
 
     /** @test */
@@ -88,6 +78,16 @@ class ReadThreadsTest extends TestCase
         $response = $this->json('get', '/threads?popular=1')->json();
         
         $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_unanswered_count()
+    {
+        create('App\Reply');
+
+        $response = $this->json('get', '/threads?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
     }
 
     /** @test */

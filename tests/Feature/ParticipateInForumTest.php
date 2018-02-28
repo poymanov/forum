@@ -33,8 +33,8 @@ class ParticipateInForumTest extends TestCase
         $reply = make('App\Reply');
         $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray());
 
-        $this->get("/threads/{$thread->channel->name}/$thread->id")
-             ->assertSee($reply->body);
+        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
     }
 
     /** @test */
@@ -71,10 +71,13 @@ class ParticipateInForumTest extends TestCase
 
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
 
+        $thread = $reply->thread;
+
         $this->delete("/replies/{$reply->id}")
             ->assertStatus(302);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->assertEquals(0, $thread->fresh()->replies_count);
     }
 
     /** @test */
