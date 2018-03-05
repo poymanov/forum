@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Notifications\ThreadWasUpdated;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,6 +40,23 @@ class ThreadTest extends TestCase
        ]);
 
        $this->assertCount(1, $this->thread->replies);
+   }
+
+   /** @test */
+   public function a_user_get_notification_for_new_reply()
+   {
+        Notification::fake();
+
+        $this->signIn();
+
+        $this->thread->subscribe();
+
+        $this->thread->addReply([
+           'body' => 'Foobar',
+           'user_id' => create('App\User')->id
+        ]);
+
+        Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
    }
 
    /** @test */
