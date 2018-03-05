@@ -45,11 +45,16 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        $this->subscriptions->filter(function ($sub) use ($reply) {
-            return $sub->user->id != $reply->owner->id;
-        })->each->notify($this, $reply);
+        $this->notifySubscribers($reply);
 
         return $reply;
+    }
+
+    public function notifySubscribers($reply)
+    {
+        $this->subscriptions
+            ->where("user_id", "!=", $reply->owner->id)
+            ->each->notify($this, $reply);
     }
 
     /**
