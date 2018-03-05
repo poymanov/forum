@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
-use App\User;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use App\Channel;
@@ -78,6 +77,10 @@ class ThreadsController extends Controller
      */
     public function show($channel, Thread $thread)
     {
+        if (auth()->check()) {
+            auth()->user()->readThread($thread);
+        }
+
         return view('threads.show', compact('thread'));
     }
 

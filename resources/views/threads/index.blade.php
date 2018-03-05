@@ -11,7 +11,15 @@
                     @forelse($threads as $thread)
                         <article>
                             <div class="thread-header">
-                                <h4><a href="{{ route('threads.show', [$thread->channel->slug, $thread]) }}">{{ $thread->title }}</a></h4>
+                                <h4>
+                                    <a href="{{ route('threads.show', [$thread->channel->slug, $thread]) }}">
+                                        @if(auth()->check() && $thread->hasUpdatedFor(auth()->user()))
+                                            <strong>{{ $thread->title }}</strong>
+                                        @else
+                                            {{ $thread->title }}
+                                        @endif
+                                    </a>
+                                </h4>
 
                                 <a href="{{ route('threads.show', [$thread->channel->slug, $thread]) }}">
                                     {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}

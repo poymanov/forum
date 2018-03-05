@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -40,5 +42,16 @@ class User extends Authenticatable
     public function activities()
     {
         return $this->hasMany('App\Activity');
+    }
+
+    public function readThread($thread)
+    {
+        $key = $this->cacheKeyThreadVisit($thread);
+        Cache::forever($key, Carbon::now());
+    }
+
+    public function cacheKeyThreadVisit($thread)
+    {
+        return sprintf('users.%s.visits.%s', $this->id, $thread->id);
     }
 }
