@@ -1,5 +1,5 @@
 <template>
-    <button :class="classes" @click="subscribe">Test</button>
+    <button :class="classes" @click="subscribe">Subscribe</button>
 </template>
 
 <script>
@@ -7,7 +7,7 @@
         props: ['active'],
         computed: {
             classes() {
-                return ['btn', this.active ? 'btn-primary' : 'btn-default'];
+                return ['btn', this.active ? 'btn-default' : 'btn-primary'];
             }
         },
         methods: {
