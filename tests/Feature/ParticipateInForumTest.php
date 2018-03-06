@@ -103,4 +103,20 @@ class ParticipateInForumTest extends TestCase
 
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedBody]);
     }
+
+    /** @test */
+    public function it_may_not_create_reply_with_invalid_keywords()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread');
+
+        $reply = make('App\Reply', [
+            'body' => 'Yahoo customer service'
+        ]);
+
+        $this->expectException(\Exception::class);
+
+        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray());
+    }
 }
