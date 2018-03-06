@@ -103,6 +103,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'title' => [
+            'spamfree' => 'The :attribute has spam'
+        ],
+        'body' => [
+            'spamfree' => 'The :attribute has spam'
+        ],
     ],
 
     /*
