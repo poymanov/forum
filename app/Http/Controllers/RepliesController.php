@@ -21,20 +21,18 @@ class RepliesController extends Controller
 
     public function store($channel, Thread $thread)
     {
-        $this->validateReply();
+        try {
+            $this->validateReply();
 
-        $reply = $thread->addReply(
-            [
+            $reply = $thread->addReply([
                 'body' => request('body'),
                 'user_id' => Auth::id()
-            ]
-        );
-
-        if(request()->expectsJson()) {
-            return $reply->load('owner');
+            ]);
+        } catch (\Exception $e) {
+            return response('You can\'t add a reply', 422);
         }
 
-        return back()->with('flash', 'Your reply has been left');
+        return $reply->load('owner');
     }
 
     public function destroy(Reply $reply)

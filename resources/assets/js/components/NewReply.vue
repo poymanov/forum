@@ -35,9 +35,13 @@
             postReply() {
                 axios.post(this.newReplyUrl, {
                     body: this.body
+                }).
+                catch(error => {
+                    flash(error.response.data, 'danger');
                 }).then(({data}) => {
                     this.body = '';
                     this.$emit('added', data);
+                    flash("You added a new reply");
                 })
             }
         }
