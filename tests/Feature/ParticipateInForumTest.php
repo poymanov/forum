@@ -112,7 +112,7 @@ class ParticipateInForumTest extends TestCase
         $thread = create('App\Thread');
 
         $reply = make('App\Reply', [
-            'body' => 'Yahoo customer service'
+            'body' => 'Yahoo customer support'
         ]);
 
         $this->expectException(\Exception::class);
