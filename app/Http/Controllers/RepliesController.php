@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateReplyRequest;
-use App\Notifications\YouWeteMentioned;
+use App\Notifications\YouWereMentioned;
 use App\Reply;
 use App\Thread;
 use App\User;

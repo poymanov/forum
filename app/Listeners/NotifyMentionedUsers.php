@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ThreadWereReceivedNewReply;
-use App\Notifications\YouWeteMentioned;
+use App\Notifications\YouWereMentioned;
 use App\User;
 
 class NotifyMentionedUsers
@@ -30,7 +30,7 @@ class NotifyMentionedUsers
         ->map(function($item) {
             return User::whereName($item)->first();
         })->filter()->each(function($user) use ($event) {
-            $user->notify(new YouWeteMentioned($event->reply));
+            $user->notify(new YouWereMentioned($event->reply));
         });
     }
 }
