@@ -30,4 +30,14 @@ class ReplyTest extends TestCase
 
         $this->assertFalse($reply->wasJustPublished());
     }
+
+    /** @test */
+    public function it_return_mention_users()
+    {
+        $reply = create('App\Reply', [
+            'body' => '@JaneDoe wants to talk with @JohnDoe'
+        ]);
+
+        $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());
+    }
 }

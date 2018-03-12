@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class YouAreMention extends Notification
+class YouWeteMentioned extends Notification
 {
     use Queueable;
 

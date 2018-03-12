@@ -28,6 +28,13 @@ class Reply extends Model
         });
     }
 
+    public function mentionedUsers()
+    {
+        preg_match_all('/@([^\s\.\,]+)/', $this->body, $matches);
+
+        return $matches[1];
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
