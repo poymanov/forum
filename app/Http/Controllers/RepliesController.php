@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateReplyRequest;
 use App\Reply;
 use App\Thread;
 use Illuminate\Support\Facades\Auth;
@@ -19,24 +20,12 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(20);
     }
 
-    public function store($channel, Thread $thread)
+    public function store($channel, Thread $thread, CreateReplyRequest $form)
     {
-        if (Gate::denies('create', new Reply)) {
-            return response(
-                'You are posting too frequently. Please take a break', 429
-            );
-        }
-
-        try {
-            request()->validate(['body' => 'required|spamfree']);
-
-            $reply = $thread->addReply([
-                'body' => request('body'),
-                'user_id' => Auth::id()
-            ]);
-        } catch (\Exception $e) {
-            return response('You can\'t add a reply', 422);
-        }
+        $reply = $thread->addReply([
+            'body' => request('body'),
+            'user_id' => Auth::id()
+        ]);
 
         return $reply->load('owner');
     }

@@ -46,7 +46,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = make('App\Reply', ['body' => null]);
         $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
-            ->assertStatus(422);
+            ->assertSessionHasErrors('body');
     }
 
     /** @test */
@@ -107,7 +107,7 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function it_may_not_create_reply_with_invalid_keywords()
     {
-        $this->signIn();
+        $this->withExceptionHandling()->signIn();
 
         $thread = create('App\Thread');
 
@@ -115,14 +115,14 @@ class ParticipateInForumTest extends TestCase
             'body' => 'Yahoo customer support'
         ]);
 
-        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
+        $this->json('post', "/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
         ->assertStatus(422);
     }
 
     /** @test */
     public function user_may_create_once_reply_per_minute()
     {
-        $this->signIn();
+        $this->withExceptionHandling()->signIn();
 
         $thread = create('App\Thread');
 
