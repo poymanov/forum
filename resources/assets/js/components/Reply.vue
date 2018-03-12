@@ -13,12 +13,14 @@
         </div>
 
         <div class="card-body" v-if="editing === true">
-            <p>
-                <textarea name="edit-reply" rows="5" class="form-control" v-model="body"></textarea>
-            </p>
+            <form @submit.prevent="update">
+                <p>
+                    <textarea name="edit-reply" rows="5" class="form-control" v-model="body" required></textarea>
+                </p>
 
-            <button class="btn btn-primary" @click="update">Update</button>
-            <button class="btn btn-link" @click="editing = false">Cancel</button>
+                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-link" @click="editing = false" type="button">Cancel</button>
+            </form>
         </div>
 
         <div class="card-body" v-else-if="editing === false" v-text="body"></div>
@@ -61,11 +63,13 @@
             update() {
                 axios.patch('/replies/' + this.data.id, {
                     body: this.body
+                }).catch(error => {
+                    flash(error.response.data, 'danger');
+                }).then(({data}) => {
+                    this.editing = false;
+                    flash('Updated');
                 });
 
-                this.editing = false;
-
-                flash('Updated');
             },
             destroy() {
                 axios.delete('/replies/' + this.data.id);

@@ -64305,6 +64305,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -64339,13 +64341,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         update: function update() {
+            var _this2 = this;
+
             axios.patch('/replies/' + this.data.id, {
                 body: this.body
+            }).catch(function (error) {
+                flash(error.response.data, 'danger');
+            }).then(function (_ref) {
+                var data = _ref.data;
+
+                _this2.editing = false;
+                flash('Updated');
             });
-
-            this.editing = false;
-
-            flash('Updated');
         },
         destroy: function destroy() {
             axios.delete('/replies/' + this.data.id);
@@ -64762,47 +64769,59 @@ var render = function() {
       _vm._v(" "),
       _vm.editing === true
         ? _c("div", { staticClass: "card-body" }, [
-            _c("p", [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.body,
-                    expression: "body"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { name: "edit-reply", rows: "5" },
-                domProps: { value: _vm.body },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.body = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
             _c(
-              "button",
-              { staticClass: "btn btn-primary", on: { click: _vm.update } },
-              [_vm._v("Update")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
+              "form",
               {
-                staticClass: "btn btn-link",
                 on: {
-                  click: function($event) {
-                    _vm.editing = false
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.update($event)
                   }
                 }
               },
-              [_vm._v("Cancel")]
+              [
+                _c("p", [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.body,
+                        expression: "body"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "edit-reply", rows: "5", required: "" },
+                    domProps: { value: _vm.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.body = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v("Update")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-link",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.editing = false
+                      }
+                    }
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ]
             )
           ])
         : _vm.editing === false

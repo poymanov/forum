@@ -26,11 +26,10 @@ class NotifyMentionedUsers
      */
     public function handle(ThreadWereReceivedNewReply $event)
     {
-        collect($event->reply->mentionedUsers())
-        ->map(function($item) {
-            return User::whereName($item)->first();
-        })->filter()->each(function($user) use ($event) {
-            $user->notify(new YouWereMentioned($event->reply));
-        });
+        User::whereIn('name', $event->reply->mentionedUsers())
+            ->get()
+            ->each(function($user) use ($event) {
+                $user->notify(new YouWereMentioned($event->reply));
+            });
     }
 }
