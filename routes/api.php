@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/users', 'Api\UsersController@index')->name('users.index');
+Route::post('/users/{user}/avatar', 'Api\AvatarsController@store')->name('avatars.store');
