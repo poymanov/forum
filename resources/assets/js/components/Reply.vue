@@ -23,7 +23,7 @@
             </form>
         </div>
 
-        <div class="card-body" v-else-if="editing === false" v-text="body"></div>
+        <div class="card-body" v-else-if="editing === false" v-html="body"></div>
 
         <div class="card-footer d-flex" v-if="canUpdate">
             <button class="btn btn-primary mr-2" @click="editing = true">Edit</button>

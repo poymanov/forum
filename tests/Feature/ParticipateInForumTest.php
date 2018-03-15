@@ -134,4 +134,16 @@ class ParticipateInForumTest extends TestCase
         $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
         ->assertStatus(429);
     }
+
+    /** @test */
+    public function it_can_search_users_by_name_started_with_query()
+    {
+        create('App\User', ['name' => 'johndoe']);
+        create('App\User', ['name' => 'johnboe']);
+        create('App\User', ['name' => 'janevoe']);
+
+        $response = $this->json('get', '/api/users?name=john');
+
+        $this->assertCount(2, $response->json());
+    }
 }

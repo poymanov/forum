@@ -3,6 +3,7 @@
     <div class="create-reply" v-if="signedIn">
         <div class="form-group">
             <textarea name="body"
+                      id="body"
                       class="form-control"
                       rows="5"
                       placeholder="Have something to say?"
@@ -14,11 +15,12 @@
     </div>
 
     <p class="text-center" v-else>Please <a href="/login">sign in</a> to participate this discussion</p>
-
-
 </template>
 
 <script>
+    import 'jquery.caret';
+    import 'at.js';
+
     export default {
         props: ['newReplyUrl'],
         data() {
@@ -30,6 +32,18 @@
             signedIn() {
                 return window.App.signedIn;
             }
+        },
+        mounted() {
+            $('#body').atwho({
+                at: "@",
+                callbacks: {
+                    remoteFilter: function(query, callback) {
+                      $.getJSON("/api/users", {name: query}, function(data) {
+                        callback(data)
+                      });
+                    }
+                  }
+            })
         },
         methods: {
             postReply() {
@@ -46,4 +60,6 @@
             }
         }
     }
+
+
 </script>
