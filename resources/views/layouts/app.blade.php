@@ -39,7 +39,7 @@
             'signedIn' => auth()->check()
         ]) !!};
     </script>
-    @yield('head');
+    @yield('head')
 </head>
 <body>
     <div id="app">
