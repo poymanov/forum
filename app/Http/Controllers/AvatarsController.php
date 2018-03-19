@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,6 +25,6 @@ class AvatarsController extends Controller
             'avatar_path' => $avatar_path
         ]);
 
-        return back();
+        return response([], 204);
     }
 }

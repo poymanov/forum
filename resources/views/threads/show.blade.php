@@ -12,6 +12,13 @@
                     <div class="card card-default mb-4">
                         <div class="card-header show-thread-header">
                             <div>
+                                <img
+                                    src="{{ $thread->creator->avatar_path }}"
+                                    alt="{{ $thread->creator->name }}"
+                                    width="25"
+                                    height="25"
+                                    class="mr-1"
+                                    >
                                 <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> created {{ $thread->title }}
                             </div>
 

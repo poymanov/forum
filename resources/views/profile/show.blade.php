@@ -4,11 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="page-header mb-4">
-                    <h1>
-                        {{ $profileUser->name }}
-                    </h1>
-                </div>
+                <avatar-form :user="{{ $profileUser }}"></avatar-form>
 
                 @forelse($activities as $date => $data)
                     <div class="h2 mb-3">{{ $date }}</div>
