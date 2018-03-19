@@ -92,23 +92,8 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
-    public function cacheVisitsKey()
-    {
-        return "threads.{$this->id}.visits";
-    }
-
-    public function resetVisits()
-    {
-        Redis::del($this->cacheVisitsKey());
-    }
-
     public function visits()
     {
-        return Redis::get($this->cacheVisitsKey()) ?? 0;
-    }
-
-    public function recordVisit()
-    {
-        Redis::incr($this->cacheVisitsKey());
+        return new Visits($this);
     }
 }
