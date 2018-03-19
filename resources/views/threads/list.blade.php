@@ -22,6 +22,10 @@
         </div>
 
         <div class="body">{{ $thread->body }}</div>
+
+        <div class="thread-footer">
+            {{ $thread->visits() }} visits
+        </div>
     </article>
     <hr>
 @empty
