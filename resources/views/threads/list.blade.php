@@ -24,7 +24,7 @@
         <div class="body">{{ $thread->body }}</div>
 
         <div class="thread-footer">
-            {{ $thread->visits()->count() }} visits
+            {{ $thread->visits }} visits
         </div>
     </article>
     <hr>

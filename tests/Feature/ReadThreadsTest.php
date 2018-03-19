@@ -100,4 +100,16 @@ class ReadThreadsTest extends TestCase
 
         $this->assertCount(2, $response['data']);
     }
+
+    /** @test */
+    public function it_increments_visits_each_time_thread_visit()
+    {
+        $thread = create('App\Thread');
+
+        $this->assertEquals(0, $thread->fresh()->visits);
+
+        $this->get("/threads/{$thread->channel->name}/{$thread->id}");
+
+        $this->assertEquals(1, $thread->fresh()->visits);
+    }
 }
