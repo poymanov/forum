@@ -26,6 +26,10 @@ class Thread extends Model
         static::deleting(function($thread) {
             $thread->replies->each->delete();
         });
+
+        static::created(function($thread) {
+            $thread->update(['slug' => $thread->title]);
+        });
     }
 
     public function replies()
@@ -97,25 +101,12 @@ class Thread extends Model
         return 'slug';
     }
 
-    public function setSlugAttribute($slug)
+    public function setSlugAttribute($value)
     {
-        if (static::whereSlug($slug = str_slug($slug))->exists()) {
-            $slug = $this->incrementSlug($slug);
+        if (static::whereSlug($slug = str_slug($value))->exists()) {
+            $slug = "{$slug}-{$this->id}";
         }
 
         $this->attributes['slug'] = $slug;
-    }
-
-    protected function incrementSlug($slug)
-    {
-        $max = static::whereTitle($this->title)->latest('id')->value('slug');
-
-        if (is_numeric($max[-1])) {
-            return preg_replace_callback('/(\d+)$/', function($matches) {
-                return $matches[1] + 1;
-            }, $max);
-        }
-
-        return "{$slug}-2";
     }
 }

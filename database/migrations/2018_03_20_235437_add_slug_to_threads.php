@@ -14,7 +14,7 @@ class AddSlugToThreads extends Migration
     public function up()
     {
         Schema::table('threads', function (Blueprint $table) {
-            $table->string('slug')->unique()->default(0);
+            $table->string('slug')->unique()->default(0)->nullable();
         });
     }
 
