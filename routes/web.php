@@ -39,3 +39,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/users/{user}/avatar', 'AvatarsController@store')->name('avatars.store');
+Route::get('/register/confirm', 'Api\UsersController@confirm')->name('user.confirm');

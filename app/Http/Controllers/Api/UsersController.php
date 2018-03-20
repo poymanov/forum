@@ -13,4 +13,17 @@ class UsersController extends Controller
         $search = request('name');
         return User::where('name', 'like', "$search%")->pluck('name');
     }
+
+    public function confirm()
+    {
+        $user = User::where(['confirmation_token' => request('token')])->first();
+
+        if (!$user) {
+            return redirect('/threads')->with('flash', 'Invalid token');
+        }
+
+        $user->confirm();
+
+        return redirect('/threads')->with('flash', 'Your account was confirmed');
+    }
 }
