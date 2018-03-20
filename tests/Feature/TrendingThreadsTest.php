@@ -27,7 +27,7 @@ class TrendingThreadsTest extends TestCase
 
         $thread = create('App\Thread');
 
-        $this->get("/threads/{$thread->channel->slug}/{$thread->id}/");
+        $this->get("/threads/{$thread->channel->slug}/{$thread->slug}/");
 
         $this->assertCount(1, $trending = $this->trending->get());
 

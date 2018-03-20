@@ -24,7 +24,7 @@
 
                             @can('update', $thread)
                                 <div>
-                                    <form method="post" action="{{ route('threads.delete', ['channel' => $thread->channel->name, 'thread' => $thread->id]) }}">
+                                    <form method="post" action="{{ route('threads.delete', ['channel' => $thread->channel->name, 'thread' => $thread->slug]) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <button type="submit" class="btn btn-link">Delete</button>

@@ -67,10 +67,11 @@ class ThreadsController extends Controller
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),
             'title' => request('title'),
-            'body' => request('body')
+            'body' => request('body'),
+            'slug' => request('title')
         ]);
 
-        return redirect(route('threads.show', ['channel' => $thread->channel->slug, 'thread' => $thread->id]))
+        return redirect(route('threads.show', ['channel' => $thread->channel->slug, 'thread' => $thread->slug]))
             ->with('flash', 'Thread was created');
     }
 

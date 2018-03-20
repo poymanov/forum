@@ -27,7 +27,7 @@ class MentionUsersTest extends TestCase
 
         $reply = make('App\Reply', ['body' => 'Hey @JaneDoe, check it']);
 
-        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray());
+        $this->post("/threads/{$thread->channel->slug}/{$thread->slug}/replies", $reply->toArray());
 
         $this->assertCount(1, $jane->notifications);
     }

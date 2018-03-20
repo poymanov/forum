@@ -31,7 +31,7 @@ class ParticipateInForumTest extends TestCase
         $thread = create('App\Thread');
 
         $reply = make('App\Reply');
-        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray());
+        $this->post("/threads/{$thread->channel->slug}/{$thread->slug}/replies", $reply->toArray());
 
         $this->assertDatabaseHas('replies', ['body' => $reply->body]);
         $this->assertEquals(1, $thread->fresh()->replies_count);
@@ -45,7 +45,7 @@ class ParticipateInForumTest extends TestCase
         $thread = create('App\Thread');
 
         $reply = make('App\Reply', ['body' => null]);
-        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
+        $this->post("/threads/{$thread->channel->slug}/{$thread->slug}/replies", $reply->toArray())
             ->assertSessionHasErrors('body');
     }
 
@@ -115,7 +115,7 @@ class ParticipateInForumTest extends TestCase
             'body' => 'Yahoo customer support'
         ]);
 
-        $this->json('post', "/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
+        $this->json('post', "/threads/{$thread->channel->slug}/{$thread->slug}/replies", $reply->toArray())
         ->assertStatus(422);
     }
 
@@ -128,10 +128,10 @@ class ParticipateInForumTest extends TestCase
 
         $reply = make('App\Reply');
 
-        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
+        $this->post("/threads/{$thread->channel->slug}/{$thread->slug}/replies", $reply->toArray())
         ->assertStatus(201);
 
-        $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray())
+        $this->post("/threads/{$thread->channel->slug}/{$thread->slug}/replies", $reply->toArray())
         ->assertStatus(429);
     }
 

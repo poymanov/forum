@@ -23,7 +23,7 @@ class ThreadsSubscriptionsTest extends TestCase
 
         $thread = create('App\Thread');
 
-        $this->post("/threads/{$thread->channel->name}/{$thread->id}/subscriptions");
+        $this->post("/threads/{$thread->channel->name}/{$thread->slug}/subscriptions");
 
         $this->assertCount(1, $thread->subscriptions);
     }
@@ -37,7 +37,7 @@ class ThreadsSubscriptionsTest extends TestCase
 
         $thread->subscribe();
 
-        $this->delete("/threads/{$thread->channel->name}/{$thread->id}/subscriptions");
+        $this->delete("/threads/{$thread->channel->name}/{$thread->slug}/subscriptions");
 
         $this->assertCount(0, $thread->subscriptions);
     }

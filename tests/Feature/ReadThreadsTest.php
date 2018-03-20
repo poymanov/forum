@@ -30,7 +30,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_single_thread()
     {
-        $this->get("/threads/{$this->thread->channel->name}/{$this->thread->id}")
+        $this->get("/threads/{$this->thread->channel->name}/{$this->thread->slug}")
              ->assertSee($this->thread->title);
     }
 
@@ -96,7 +96,7 @@ class ReadThreadsTest extends TestCase
         $thread = $this->thread;
         create('App\Reply', ['thread_id' => $thread->id], 2);
 
-        $response = $this->json('get', "/threads/{$thread->channel->name}/{$thread->id}/replies")->json();
+        $response = $this->json('get', "/threads/{$thread->channel->name}/{$thread->slug}/replies")->json();
 
         $this->assertCount(2, $response['data']);
     }
@@ -108,7 +108,7 @@ class ReadThreadsTest extends TestCase
 
         $this->assertEquals(0, $thread->fresh()->visits);
 
-        $this->get("/threads/{$thread->channel->name}/{$thread->id}");
+        $this->get("/threads/{$thread->channel->name}/{$thread->slug}");
 
         $this->assertEquals(1, $thread->fresh()->visits);
     }

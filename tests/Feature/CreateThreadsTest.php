@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Activity;
+use App\Thread;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -75,6 +76,27 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function a_thread_requires_a_unique_slug()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread', [
+            'title' => 'Test Title',
+            'slug' => 'test-title',
+        ]);
+
+        $this->assertEquals($thread->fresh()->slug, 'test-title');
+
+        $this->post('/threads', $thread->toArray());
+
+        $this->assertTrue(Thread::whereSlug('test-title-2')->exists());
+
+        $this->post('/threads', $thread->toArray());
+
+        $this->assertTrue(Thread::whereSlug('test-title-3')->exists());
+    }
+
+    /** @test */
     public function a_thread_requires_valid_channel()
     {
         $this->publishThread(['channel_id' => null])
@@ -90,11 +112,11 @@ class CreateThreadsTest extends TestCase
         $thread = create('App\Thread');
 
         $this->withExceptionHandling();
-        $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->id)
+        $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->slug)
             ->assertRedirect('/login');
 
         $this->signIn();
-        $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->id)
+        $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->slug)
             ->assertStatus(403);
 
     }
@@ -107,7 +129,7 @@ class CreateThreadsTest extends TestCase
         $thread = create('App\Thread', ['user_id' => auth()->id()]);
         $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
-        $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->id);
+        $this->delete('/threads/' . $thread->channel->slug . '/' . $thread->slug);
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id])
             ->assertDatabaseMissing('replies', ['id' => $reply->id])
