@@ -34,6 +34,7 @@ Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy')->name
 Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 Route::get('/profile/{user}/notifications', 'UserNotificationsController@index')->name('user_notifications.index');
 Route::delete('/profile/{user}/notifications/{notification}', 'UserNotificationsController@destroy')->name('user_notifications.delete');
+Route::post('/replies/{reply}/best', 'BestReplyController@store')->name('replies.best');
 
 Auth::routes();
 

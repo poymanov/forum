@@ -1,13 +1,13 @@
 <template>
-    <div :id="'reply-' + data.id" class="card card-default mb-4">
-        <div class="card-header">
+    <div :id="'reply-' + reply.id" class="card card-default mb-4">
+        <div class="card-header" :class="isBest ? 'alert-success': ''">
 
             <div class="reply-header">
                 <div>
                     <a :href="'/profile/' + owner_name" v-text="">{{ owner_name }}</a> said {{ ago }}
                 </div>
                 <div v-if="signedIn === true">
-                    <favorite :reply="data"></favorite>
+                    <favorite :reply="reply"></favorite>
                 </div>
             </div>
         </div>
@@ -25,9 +25,12 @@
 
         <div class="card-body" v-else-if="editing === false" v-html="body"></div>
 
-        <div class="card-footer d-flex" v-if="canUpdate">
-            <button class="btn btn-primary mr-2" @click="editing = true">Edit</button>
-            <button class="btn btn-danger" @click="destroy">Delete</button>
+        <div class="card-footer d-flex" v-if="authorize('owns', reply) || authorize('owns', reply.thread)">
+            <div v-if="authorize('owns', reply)">
+                <button class="btn btn-primary mr-2" @click="editing = true">Edit</button>
+                <button class="btn btn-danger" @click="destroy">Delete</button>
+            </div>
+            <button class="btn btn-default ml-auto" v-if="authorize('owns', reply.thread)" v-show="! isBest" @click="markBestReply">Best Reply?</button>
         </div>
     </div>
 </template>
@@ -37,31 +40,31 @@
     import moment from 'moment';
 
     export default {
-        props: ['data'],
+        props: ['reply'],
         components: { Favorite },
         data() {
             return {
                 editing: false,
-                body: this.data.body
+                body: this.reply.body,
+                isBest: this.reply.isBest
             }
+        },
+        created() {
+            window.events.$on('best-reply-select', (id) => {
+                this.isBest = (this.reply.id === id);
+            });
         },
         computed: {
             owner_name() {
-                return this.data.owner.name;
+                return this.reply.owner.name;
             },
             ago() {
-                return moment(this.data.created_at).fromNow();
+                return moment(this.reply.created_at).fromNow();
             },
-            signedIn() {
-                return window.App.signedIn;
-            },
-            canUpdate() {
-                return this.authorize(user => this.data.user_id == user.id);
-            }
         },
         methods: {
             update() {
-                axios.patch('/replies/' + this.data.id, {
+                axios.patch('/replies/' + this.reply.id, {
                     body: this.body
                 }).catch(error => {
                     flash(error.response.data, 'danger');
@@ -72,9 +75,13 @@
 
             },
             destroy() {
-                axios.delete('/replies/' + this.data.id);
+                axios.delete('/replies/' + this.reply.id);
 
-                this.$emit('deleted', this.data.id);
+                this.$emit('deleted', this.reply.id);
+            },
+            markBestReply() {
+                axios.post('/replies/' + this.reply.id + '/best');
+                window.events.$emit('best-reply-select', this.reply.id);
             }
         }
     }

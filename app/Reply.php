@@ -13,7 +13,7 @@ class Reply extends Model
 
     protected $with = ['owner', 'favorites', 'thread'];
 
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'isBest'];
 
     protected static function boot()
     {
@@ -25,6 +25,7 @@ class Reply extends Model
 
         static::deleted(function($reply) {
             $reply->thread->decrement('replies_count');
+            $reply->thread->update(['best_reply_id' => null]);
         });
     }
 
@@ -53,5 +54,15 @@ class Reply extends Model
     public function setBodyAttribute($value)
     {
         $this->attributes['body'] = preg_replace('/@([\w]+)/', '<a href="/profile/$1">$0</a>', $value);
+    }
+
+    public function isBest()
+    {
+        return $this->thread->best_reply_id == $this->id;
+    }
+
+    public function getIsBestAttribute()
+    {
+        return $this->isBest();
     }
 }

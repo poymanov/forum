@@ -13,7 +13,7 @@ class Thread extends Model
 {
     use RecordsActivity;
 
-    protected $fillable = ['user_id', 'body', 'title', 'channel_id', 'slug'];
+    protected $fillable = ['user_id', 'body', 'title', 'channel_id', 'slug', 'best_reply_id'];
 
     protected $with = ['creator', 'channel'];
 
@@ -108,5 +108,10 @@ class Thread extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
     }
 }
