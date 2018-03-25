@@ -13,11 +13,19 @@ class Thread extends Model
 {
     use RecordsActivity;
 
-    protected $fillable = ['user_id', 'body', 'title', 'channel_id', 'slug', 'best_reply_id'];
+    protected $fillable = [
+        'user_id', 'body', 'title',
+        'channel_id', 'slug', 'best_reply_id',
+        'locked'
+    ];
 
     protected $with = ['creator', 'channel'];
 
     protected $appends = ['isSubscribedTo'];
+
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
 
     protected static function boot()
     {

@@ -117,6 +117,5 @@ class ThreadTest extends TestCase
        $user->readThread($this->thread);
 
        $this->assertFalse($this->thread->hasUpdatedFor($user));
-
    }
 }

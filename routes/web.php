@@ -25,6 +25,8 @@ Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadsSubscriptions
 Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
 Route::post('/threads', 'ThreadsController@store')->name('threads.store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->name('replies.store');
+Route::post('/lock-thread/{thread}', 'LockThreadController@store')->name('lock-thread.store');
+Route::delete('/lock-thread/{thread}', 'LockThreadController@destroy')->name('lock-thread.destroy');
 Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index')->name('replies.index');
 Route::get('/threads/{channel}', 'ThreadsController@index')->name('threads.channel');
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.delete');

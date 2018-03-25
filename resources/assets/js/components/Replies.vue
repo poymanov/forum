@@ -6,7 +6,11 @@
 
         <paginator :dataSet="dataSet" @changed="fetch"></paginator>
 
-        <new-reply :new-reply-url="endpoint" @added="add"></new-reply>
+        <p v-if="$parent.locked">
+            Thread is locked. New replies are not allowed.
+        </p>
+
+        <new-reply :new-reply-url="endpoint" @added="add" v-else></new-reply>
     </div>
 </template>
 
@@ -20,7 +24,7 @@
         mixins: [collection],
         data() {
             return {
-                dataSet: false,
+                dataSet: false
             }
         },
         computed: {
