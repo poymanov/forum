@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/threads', 'ThreadsController@index')->name('threads.index');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
+Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.delete');
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadsSubscriptionsController@store')
     ->name('threads_subscriptions.store');

@@ -64125,14 +64125,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             repliesCount: this.thread.replies_count,
-            locked: this.thread.locked
+            locked: this.thread.locked,
+            editing: false,
+            title: this.thread.title,
+            body: this.thread.body,
+            form: {}
         };
+    },
+    created: function created() {
+        this.resetForm();
     },
 
     methods: {
         toggleLock: function toggleLock() {
             axios[this.locked ? 'delete' : 'post']('/lock-thread/' + this.thread.slug);
             this.locked = !this.locked;
+        },
+        update: function update() {
+            var _this = this;
+
+            var uri = '/threads/' + this.thread.channel.slug + '/' + this.thread.slug;
+
+            axios.patch(uri, this.form).then(function () {
+                flash('Thread was updated');
+
+                _this.title = _this.form.title;
+                _this.body = _this.form.body;
+                _this.editing = false;
+            });
+        },
+        resetForm: function resetForm() {
+            this.form.title = this.thread.title;
+            this.form.body = this.thread.body;
+            this.editing = false;
         }
     }
 });
