@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/threads', 'ThreadsController@index')->name('threads.index');
+Route::get('/threads/search', 'SearchController@show')->name('threads.search');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
 Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.delete');

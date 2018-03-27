@@ -32,6 +32,11 @@
         [v-cloak] {
             display: none;
         }
+
+        .ais-highlight em {
+            background-color: #f1c40f;
+            font-style: normal;
+        }
     </style>
     <script>
         window.App = {!! json_encode([

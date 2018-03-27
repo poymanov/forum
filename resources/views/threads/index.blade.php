@@ -14,6 +14,19 @@
             </div>
         </div>
         <div class="col-md-4">
+            <div class="card card-default mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <form action="/threads/search" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="q">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             @if($trending)
                 <div class="card card-default">
                     <div class="card-header">Trending Threads</div>

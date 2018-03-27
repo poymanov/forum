@@ -4,14 +4,12 @@ namespace App;
 
 use App\Events\ThreadWereReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
-use App\Reply;
-use App\Channel;
 use App\Filters\ThreadFilters;
-use Illuminate\Support\Facades\Redis;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, Searchable;
 
     protected $fillable = [
         'user_id', 'body', 'title',

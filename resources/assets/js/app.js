@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import InstantSearch from 'vue-instantsearch';
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -20,6 +22,8 @@ Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('user-notifications', require('./components/UserNotifications.vue'));
 Vue.component('thread-view', require('./pages/Thread.vue'));
 Vue.component('avatar-form', require('./components/AvatarForm.vue'));
+
+Vue.use(InstantSearch);
 
 const app = new Vue({
     el: '#app'
