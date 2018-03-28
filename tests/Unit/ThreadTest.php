@@ -118,4 +118,12 @@ class ThreadTest extends TestCase
 
        $this->assertFalse($this->thread->hasUpdatedFor($user));
    }
+
+   /** @test */
+   public function a_thread_body_automatically_sanitazed()
+   {
+        $thread = make('App\Thread', ['body' => "<script>alert('test')</script><p>ok</p>"]);
+
+        $this->assertEquals("<p>ok</p>", $thread->body);
+   }
 }
