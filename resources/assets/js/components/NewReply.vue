@@ -2,14 +2,7 @@
 
     <div class="create-reply" v-if="signedIn">
         <div class="form-group">
-            <textarea name="body"
-                      id="body"
-                      class="form-control"
-                      rows="5"
-                      placeholder="Have something to say?"
-                      required
-                      v-model="body">
-            </textarea>
+            <wysiwyg v-model="body" placeholder="Have something to say?" :shouldClear="completed"></wysiwyg>
         </div>
         <button class="btn" @click="postReply">Post</button>
     </div>
@@ -25,7 +18,8 @@
         props: ['newReplyUrl'],
         data() {
             return {
-                body: ""
+                body: "",
+                completed: false
             }
         },
         mounted() {
@@ -50,6 +44,7 @@
                 }).then(({data}) => {
                     this.body = '';
                     this.$emit('added', data);
+                    this.completed = true;
                     flash("You added a new reply");
                 })
             }

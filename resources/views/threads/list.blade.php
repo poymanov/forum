@@ -21,7 +21,7 @@
             </a>
         </div>
 
-        <div class="body">{{ $thread->body }}</div>
+        <div class="body">{!! $thread->body !!}</div>
 
         <div class="thread-footer">
             {{ $thread->visits }} visits

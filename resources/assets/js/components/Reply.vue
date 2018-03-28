@@ -15,7 +15,8 @@
         <div class="card-body" v-if="editing === true">
             <form @submit.prevent="update">
                 <p>
-                    <textarea name="edit-reply" rows="5" class="form-control" v-model="body" required></textarea>
+                    <wysiwyg v-model="body"></wysiwyg>
+                    <!--<textarea name="edit-reply" rows="5" class="form-control" v-model="body" required></textarea>-->
                 </p>
 
                 <button class="btn btn-primary">Update</button>

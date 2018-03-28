@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="card-body" v-text="body"></div>
+    <div class="card-body" v-html="body"></div>
 
     <div class="card-footer">
         <button class="btn btn-default" @click="editing = true">Update</button>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="card-body">
-        <textarea name="body" rows="10" class="form-control" v-model="form.body"></textarea>
+        <wysiwyg v-model="form.body"></wysiwyg>
     </div>
 
     <div class="card-footer d-flex">
