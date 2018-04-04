@@ -1,6 +1,9 @@
 <template>
     <div class="page-header mb-4">
-        <h1 v-text="user.name"></h1>
+        <h1>
+            {{ user.name }}
+            <small v-text="reputation"></small>
+        </h1>
         <img :src="avatar" width="50" height="50">
 
         <form v-if="canUpdate" method="post" enctype="multipart/form-data">
@@ -24,6 +27,9 @@
         computed: {
             canUpdate() {
                 return this.authorize(user => user.id === this.user.id)
+            },
+            reputation() {
+                return this.user.reputation + " XP";
             }
         },
         methods: {

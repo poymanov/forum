@@ -8,7 +8,7 @@
                 height="25"
                 class="mr-1"
                 >
-            <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }}</a> created <span v-text="title"></span>
+            <a href="{{ route('profile.show', $thread->creator) }}">{{ $thread->creator->name }} ({{ $thread->creator->reputation }} XP)</a> created <span v-text="title"></span>
         </div>
     </div>
 

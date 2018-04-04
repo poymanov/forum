@@ -31,10 +31,12 @@ class Thread extends Model
 
         static::deleting(function($thread) {
             $thread->replies->each->delete();
+            Reputation::reduce($thread->creator, Reputation::THREAD_WAS_CREATED);
         });
 
         static::created(function($thread) {
             $thread->update(['slug' => $thread->title]);
+            Reputation::award($thread->creator, Reputation::THREAD_WAS_CREATED);
         });
     }
 
@@ -119,6 +121,8 @@ class Thread extends Model
     public function markBestReply(Reply $reply)
     {
         $this->update(['best_reply_id' => $reply->id]);
+
+        Reputation::award($reply->owner, Reputation::REPLY_IS_BEST);
     }
 
     public function getBodyAttribute($value)
