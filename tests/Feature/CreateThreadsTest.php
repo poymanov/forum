@@ -86,6 +86,10 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_a_recaptcha()
     {
+        if (Recaptcha::isInTestMode()) {
+            $this->markTestSkipped("Recaptcha is in test mode.");
+        }
+
         unset(app()[Recaptcha::class]);
 
         $this->publishThread(['g-recaptcha-response' => 'token'])
