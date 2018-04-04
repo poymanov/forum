@@ -4,8 +4,6 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class ThreadWasUpdated extends Notification
 {
@@ -45,10 +43,10 @@ class ThreadWasUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->owner->name . ' replied to ' . $this->thread->title,
+            'message' => $this->reply->owner->name.' replied to '.$this->thread->title,
             'link' => route('threads.show', [
                 'channel' => $this->thread->channel->slug, 'thread' => $this->thread->id
-            ]) . "#reply-{$this->reply->id}"
+            ])."#reply-{$this->reply->id}"
         ];
     }
 }

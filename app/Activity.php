@@ -20,7 +20,7 @@ class Activity extends Model
                 ->take(50)
                 ->latest()
                 ->get()
-                ->groupBy(function($activity) {
+                ->groupBy(function ($activity) {
                     return $activity->created_at->format('d-m-Y');
                 });
     }

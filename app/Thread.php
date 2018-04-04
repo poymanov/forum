@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Events\ThreadWereReceivedNewReply;
-use Illuminate\Database\Eloquent\Model;
-use App\Filters\ThreadFilters;
 use Laravel\Scout\Searchable;
+use App\Filters\ThreadFilters;
+use Illuminate\Database\Eloquent\Model;
+use App\Events\ThreadWereReceivedNewReply;
 
 class Thread extends Model
 {
@@ -29,12 +29,12 @@ class Thread extends Model
     {
         parent::boot();
 
-        static::deleting(function($thread) {
+        static::deleting(function ($thread) {
             $thread->replies->each->delete();
             Reputation::reduce($thread->creator, Reputation::THREAD_WAS_CREATED);
         });
 
-        static::created(function($thread) {
+        static::created(function ($thread) {
             $thread->update(['slug' => $thread->title]);
             Reputation::award($thread->creator, Reputation::THREAD_WAS_CREATED);
         });

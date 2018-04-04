@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Reply;
+use Illuminate\Database\Seeder;
 
 class RepliesSeeder extends Seeder
 {

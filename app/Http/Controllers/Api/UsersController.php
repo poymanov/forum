@@ -11,6 +11,7 @@ class UsersController extends Controller
     public function index()
     {
         $search = request('name');
+
         return User::where('name', 'like', "$search%")->pluck('name');
     }
 
@@ -18,7 +19,7 @@ class UsersController extends Controller
     {
         $user = User::where(['confirmation_token' => request('token')])->first();
 
-        if (!$user) {
+        if (! $user) {
             return redirect('/threads')->with('flash', 'Invalid token');
         }
 

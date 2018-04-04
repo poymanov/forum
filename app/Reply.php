@@ -19,12 +19,12 @@ class Reply extends Model
     {
         parent::boot();
 
-        static::created(function($reply) {
+        static::created(function ($reply) {
             $reply->thread->increment('replies_count');
             Reputation::award($reply->owner, Reputation::REPLY_POSTED);
         });
 
-        static::deleted(function($reply) {
+        static::deleted(function ($reply) {
             $reply->thread->decrement('replies_count');
             $reply->thread->update(['best_reply_id' => null]);
             Reputation::reduce($reply->owner, Reputation::REPLY_POSTED);

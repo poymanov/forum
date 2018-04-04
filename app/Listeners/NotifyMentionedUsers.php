@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\ThreadWereReceivedNewReply;
-use App\Notifications\YouWereMentioned;
 use App\User;
+use App\Notifications\YouWereMentioned;
+use App\Events\ThreadWereReceivedNewReply;
 
 class NotifyMentionedUsers
 {
@@ -28,7 +28,7 @@ class NotifyMentionedUsers
     {
         User::whereIn('name', $event->reply->mentionedUsers())
             ->get()
-            ->each(function($user) use ($event) {
+            ->each(function ($user) use ($event) {
                 $user->notify(new YouWereMentioned($event->reply));
             });
     }

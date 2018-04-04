@@ -3,17 +3,16 @@
  * Created by PhpStorm.
  * User: poymanov
  * Date: 15.02.18
- * Time: 22:32
+ * Time: 22:32.
  */
 
 namespace App;
-
 
 trait Favoritable
 {
     protected static function bootFavoritable()
     {
-        static::deleted(function($model) {
+        static::deleted(function ($model) {
             $model->favorites->each->delete();
         });
     }
@@ -27,8 +26,9 @@ trait Favoritable
     {
         $attributes = ['user_id' => auth()->id()];
 
-        if (!$this->favorites()->where($attributes)->exists()) {
+        if (! $this->favorites()->where($attributes)->exists()) {
             Reputation::award($this->owner, Reputation::REPLY_WAS_FAVORITED);
+
             return $this->favorites()->create($attributes);
         }
     }
@@ -39,12 +39,12 @@ trait Favoritable
 
         $this->favorites()->where($attributes)->get()->each->delete();
 
-         Reputation::reduce($this->owner, Reputation::REPLY_WAS_FAVORITED);
+        Reputation::reduce($this->owner, Reputation::REPLY_WAS_FAVORITED);
     }
 
     public function isFavorited()
     {
-        return !! $this->favorites->where('user_id', auth()->id())->count();
+        return (bool) $this->favorites->where('user_id', auth()->id())->count();
     }
 
     public function getFavoritesCountAttribute()

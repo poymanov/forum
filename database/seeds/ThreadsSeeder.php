@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Thread;
+use Illuminate\Database\Seeder;
 
 class ThreadsSeeder extends Seeder
 {
