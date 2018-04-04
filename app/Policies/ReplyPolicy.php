@@ -30,7 +30,7 @@ class ReplyPolicy
      */
     public function create(User $user)
     {
-        if(! $lastReply = $user->fresh()->lastReply) {
+        if (! $lastReply = $user->fresh()->lastReply) {
             return true;
         }
 
@@ -46,7 +46,7 @@ class ReplyPolicy
      */
     public function update(User $user, Reply $reply)
     {
-         return $user->id == $reply->user_id;
+        return $user->id == $reply->user_id;
     }
 
     /**

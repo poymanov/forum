@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use App\Exceptions\ThrottleException;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
 class CreateReplyRequest extends FormRequest
 {
@@ -34,6 +34,4 @@ class CreateReplyRequest extends FormRequest
     {
         throw new ThrottleException('You are posting too frequently. Please take a break');
     }
-
-
 }

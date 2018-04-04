@@ -4,8 +4,6 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class YouWereMentioned extends Notification
 {
@@ -22,7 +20,6 @@ class YouWereMentioned extends Notification
         $this->reply = $reply;
     }
 
-
     /**
      * Get the notification's delivery channels.
      *
@@ -34,7 +31,6 @@ class YouWereMentioned extends Notification
         return ['database'];
     }
 
-
     /**
      * Get the array representation of the notification.
      *
@@ -44,10 +40,10 @@ class YouWereMentioned extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->owner->name . ' mentioned you on ' . $this->reply->thread->title,
+            'message' => $this->reply->owner->name.' mentioned you on '.$this->reply->thread->title,
             'link' => route('threads.show', [
                 'channel' => $this->reply->thread->channel->slug, 'thread' => $this->reply->thread->id
-            ]) . "#reply-{$this->reply->id}"
+            ])."#reply-{$this->reply->id}"
         ];
     }
 }

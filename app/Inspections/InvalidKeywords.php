@@ -11,7 +11,7 @@ class InvalidKeywords
     public function detect($data)
     {
         foreach ($this->invalidKeywords as $value) {
-            if(stripos($data, $value) !== false) {
+            if (stripos($data, $value) !== false) {
                 throw new \Exception('Detect spam');
             }
         }

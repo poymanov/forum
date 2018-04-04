@@ -28,6 +28,7 @@ class ThreadFilters extends Filters
     protected function popular()
     {
         $this->builder->getQuery()->orders = [];
+
         return $this->builder->orderByDesc('replies_count');
     }
 

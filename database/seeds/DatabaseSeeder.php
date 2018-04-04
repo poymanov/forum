@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class DatabaseSeeder
+ * Class DatabaseSeeder.
  */
 class DatabaseSeeder extends Seeder
 {
@@ -28,9 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RepliesSeeder::class);
     }
 
-    /**
-     *
-     */
     private function clearDatabase()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
