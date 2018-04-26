@@ -28,13 +28,6 @@
 - Redis
 - Composer
 
-В директории проекта необходимо выполнить команды:
-
-```
-composer install
-npm run dev
-```
-
 ## Настройка
 
 Параметры приложения задаются в файле `.env`. Его необходимо создать из файла с тестовой конфигурацией:
@@ -57,4 +50,74 @@ APP_NAME=Laravel
 APP_URL=http://localhost
 ```
 
+Окружение в котором будет запущено приложение (local/production):
+
+```
+APP_ENV=local
+```
+
 ---
+
+### БД
+
+По-умолчанию указаны переменные для настройки работы с mysql:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+```
+
+---
+
+### Redis
+
+```
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+---
+
+### Google ReCaptcha
+
+Получить данные для работы с ReCaptcha - https://www.google.com/recaptcha/intro/android.html
+
+```
+RECAPTCHA_KEY=
+RECAPTCHA_SECRET=
+```
+
+Можно использовать тестовые данные:
+
+```
+RECAPTCHA_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+RECAPTCHA_SECRET=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+```
+
+---
+
+### Algolia
+
+Algolia - сервис для полнотекстового поиска на основе поисковых индексов.
+Получить данные для работы - https://www.algolia.com/
+
+```
+ALGOLIA_APP_ID=
+ALGOLIA_SECRET=
+ALGOLIA_KEY=
+```
+
+
+После заполнения параметров в директории проекта необходимо выполнить команды:
+
+```
+composer install
+npm run dev
+```
+
+Проект готов к запуску.
