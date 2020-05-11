@@ -27,7 +27,7 @@ make init
 ## Запуск
 
 ```
-make start
+make up
 ```
 
 Приложение доступно по адресу - http://localhost:8080
