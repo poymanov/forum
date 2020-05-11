@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/threads', 'ThreadsController@index')->name('threads.index');
 Route::get('/threads/search', 'SearchController@show')->name('threads.search');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
@@ -42,6 +38,6 @@ Route::post('/replies/{reply}/best', 'BestReplyController@store')->name('replies
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::post('/users/{user}/avatar', 'AvatarsController@store')->name('avatars.store');
 Route::get('/register/confirm', 'Api\UsersController@confirm')->name('user.confirm');
